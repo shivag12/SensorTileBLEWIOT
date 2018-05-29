@@ -17,10 +17,10 @@ while True:
   except pexpect.TIMEOUT:
     NOF_REMAINING_RETRY = NOF_REMAINING_RETRY-1
     if (NOF_REMAINING_RETRY>0):
-      print "timeout, retry..."
+      print("timeout, retry...")
       continue
     else:
-      print "timeout, giving up."
+      print("timeout, giving up.")
       break
   else:
     print("Connected!")
