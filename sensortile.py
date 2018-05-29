@@ -29,7 +29,7 @@ while True:
 
         def hexStrToInt(hexstr):
             arrreverse = ''.join(reversed(hexstr))
-            return int(arrreverse, 16)/100
+            return int(arrreverse, 16)
 
         def ibmiotfconnection():
            try:
@@ -62,7 +62,6 @@ while True:
         child.sendline("char-write-cmd 000f 0100")
         child.expect("Notification handle = 0x000e value:", timeout=10)
         child.expect("\r\n")
-        print("Pressure & Temperature:  ")
         envHandle = child.before
 
         envSplit = envHandle.split( )
@@ -71,9 +70,10 @@ while True:
 
         st = datetime.datetime.fromtimestamp(ts.time()).strftime('%Y-%m-%d %H:%M:%S')
 
-        jsonString = "{'ts' : %s, temp': %s ,'pressure' : %s}" %(st,hexStrToInt(temp),hexStrToInt(pressure))
+        jsonString = "{'ts' : %s, 'temp': %s ,'pressure' : %s}" %(st,hexStrToInt(temp)/10,hexStrToInt(pressure)/100)
 
         iothub.publishEvent("env","json",jsonString)
+        print("Environmental data published successfully : ",jsonString)
                 
         # sys.exit(0)
     else:
