@@ -1,8 +1,6 @@
-import wIot as watsoniot
+import datetime
+import time as ts
 
+st = datetime.datetime.fromtimestamp(ts.time()).strftime('%Y-%m-%d %H:%M:%S')
 
-deviceClient = watsoniot.ibmiotfconnection()
-
-deviceClient.publishEvent("status","json","{'temp' : 70}")
-
-print(int("FFFFF63C",16))
+print(st)
