@@ -28,8 +28,10 @@ while True:
         print("Connected!")
 
         def hexStrToInt(hexstr):
-            arrreverse = ''.join(reversed(hexstr))
-            return int(arrreverse, 16)
+          val = int((''.join(reversed(hexstr))),16)
+          if ((val&0x8000)==0x8000):
+            val = -((val^0xffff)+1)
+          return val
 
         def ibmiotfconnection():
            try:
@@ -74,6 +76,52 @@ while True:
 
         iothub.publishEvent("env","json",jsonString)
         print("Environmental data published successfully : ",jsonString)
+
+
+        child.sendline("char-write-cmd 0012 0100")
+        child.expect("Notification handle = ", timeout=10)
+        child.expect("\r\n")
+        memsHandle = child.before
+
+        memsSplit = memsHandle.split( )
+        #Accelerometer data 
+        Accx = memsSplit[2:4]
+        Accy = memsSplit[4:6]
+        Accz = memsSplit[6:8]
+
+        #Gyroscope data
+        gyrox = memsSplit[8:10]
+        gyroy = memsSplit[10:12]
+        gyroz = memsSplit[12:14]
+
+        #Magnotometer data
+        magx = memsSplit[14:16]
+        magy = memsSplit[16:18]
+        magz = memsSplit[18:20]        
+
+        st = datetime.datetime.fromtimestamp(ts.time()).strftime('%Y-%m-%d %H:%M:%S')
+
+        MEMSjsonString = {
+          "acc" : {
+            "x" : hexStrToInt(Accx),
+            "y" : hexStrToInt(Accy),
+            "z" : hexStrToInt(Accz)
+            },
+          "gyro" : {
+            "x" : hexStrToInt(gyrox),
+            "y" : hexStrToInt(gyroy),
+            "z" : hexStrToInt(gyroz)
+            },
+          "mag" : {
+            "x" : hexStrToInt(magx),
+            "y" : hexStrToInt(magy),
+            "z" : hexStrToInt(magz)
+            },
+            "ts" : st
+        }
+
+        iothub.publishEvent("env","json",MEMSjsonString)
+        print("MEMS data published successfully : ",MEMSjsonString)
                 
         # sys.exit(0)
     else:
