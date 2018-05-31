@@ -75,7 +75,7 @@ while True:
         iothub.publishEvent("env","json",jsonString)
         print("Environmental data published successfully : ",jsonString)
                 
-        # sys.exit(0)
+        #sys.exit(0)
     else:
         print("FAILED!")
         sys.exit(-1)
