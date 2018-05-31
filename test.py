@@ -4,6 +4,9 @@
 # st = datetime.datetime.fromtimestamp(ts.time()).strftime('%Y-%m-%d %H:%M:%S')
 
 # print(st)
+
+import sys as sys
+
 def hexStrToInt(hexstr):
     val = int((''.join(reversed(hexstr))),16)
     if ((val&0x8000)==0x8000): # treat signed 16bits
@@ -11,6 +14,6 @@ def hexStrToInt(hexstr):
     return val
 
 
-print(hexStrToInt(["ff", "ff"]))
+print("Device Id %s" %(sys.argv[1]))
 
 #ffbf

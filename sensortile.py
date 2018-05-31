@@ -5,7 +5,7 @@ import sys
 import os
 import datetime
 
-child = pexpect.spawn("gatttool -t random -b C0:7A:18:31:3E:48 -I")
+child = pexpect.spawn("gatttool -t random -b %s -I" %sys.argv[1])
 
 print("Connecting to:"),
 print("C0:7A:18:31:3E:48")
