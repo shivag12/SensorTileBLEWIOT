@@ -123,7 +123,7 @@ while True:
         iothub.publishEvent("env","json",MEMSjsonString)
         print("MEMS data published successfully : ",MEMSjsonString)
                 
-        # sys.exit(0)
+        #sys.exit(0)
     else:
         print("FAILED!")
         sys.exit(-1)
