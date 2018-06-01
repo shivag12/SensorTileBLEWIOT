@@ -5,7 +5,7 @@ import sys
 import os
 import datetime
 
-child = pexpect.spawn("gatttool -t random -b %s -I" %sys.argv[1])
+child = pexpect.spawn("gatttool -b %s -I" %sys.argv[1])
 
 print("Connecting to:"),
 print("C0:7A:18:31:3E:48")
@@ -29,8 +29,8 @@ while True:
 
         def hexStrToInt(hexstr):
           val = int((''.join(reversed(hexstr))),16)
-          if ((val&0x8000)==0x8000):
-            val = -((val^0xffff)+1)
+          if((val&0x8000)==0x8000):
+              val = -((val^0xffff)+1)
           return val
 
         def ibmiotfconnection():
